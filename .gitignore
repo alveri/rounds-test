@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+.vitest/
+*.tsbuildinfo
+*.log
+
+# Local configuration and secrets
+.env
+.env.local
+.claude/settings.local.json
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store
+__pycache__/

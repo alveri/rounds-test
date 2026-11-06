@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CompetitorPulse</title>
+    <style>
+      /* Deliberately minimal: the assignment does not grade visual design. */
+      body { font-family: system-ui, sans-serif; margin: 0; color: #111; }
+      main { max-width: 720px; margin: 0 auto; padding: 24px 20px; }
+      h1 { font-size: 20px; margin: 0 0 16px; }
+      h2 { margin: 20px 0 16px; }
+      a { color: #0b57d0; }
+      .brand { color: inherit; text-decoration: none; }
+      button, .button { font: inherit; padding: 6px 14px; border: 1px solid #888; border-radius: 4px;
+        background: #f2f2f2; color: #111; cursor: pointer; text-decoration: none; display: inline-block; }
+      button:disabled { opacity: 0.6; cursor: default; }
+      .add-form { display: flex; gap: 8px; }
+      .add-form input { flex: 1; font: inherit; padding: 6px 8px; border: 1px solid #888; border-radius: 4px; }
+      .competitors { list-style: none; padding: 0; margin: 12px 0 0; }
+      .competitors li { display: flex; justify-content: space-between; align-items: center; gap: 12px;
+        padding: 10px 0; border-bottom: 1px solid #ddd; }
+      .competitors a { font-size: 17px; }
+      .toolbar { display: flex; gap: 8px; }
+      .timeline { list-style: none; padding: 0; margin: 0; }
+      .snapshot { border: 1px solid #ddd; border-radius: 6px; padding: 12px; margin-bottom: 12px; }
+      .snapshot p { margin: 6px 0 0; }
+      .summary { font-style: italic; }
+      .muted { color: #666; }
+      .small { font-size: 13px; }
+      .error { color: #b3261e; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

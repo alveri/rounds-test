@@ -1,0 +1,99 @@
+# One command: `docker compose up --build`, then open http://localhost:3000.
+# `docker compose down -v` resets everything, including the listing stub's version counters.
+# Host ports can be moved with APP_PORT, DB_PORT, MOCK_LLM_PORT and STUB_PORT, and
+# everything is published on localhost only: this is a development stack.
+
+x-app-image: &app-image
+  build:
+    context: .
+    target: app
+  image: competitor-pulse-app:local
+
+services:
+  db:
+    image: postgres:17-alpine
+    init: true
+    restart: on-failure
+    environment:
+      POSTGRES_USER: competitorpulse
+      POSTGRES_PASSWORD: competitorpulse
+      POSTGRES_DB: competitorpulse
+    ports:
+      # 5433 on the host because 5432 is often taken by a local PostgreSQL.
+      - "127.0.0.1:${DB_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U competitorpulse -d competitorpulse"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  # Runs once and exits. A deploy step of its own, so replicas never migrate on start.
+  migrate:
+    <<: *app-image
+    init: true
+    command: ["node", "--enable-source-maps", "server/dist/db/migrate.js"]
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      DATABASE_URL: postgres://competitorpulse:competitorpulse@db:5432/competitorpulse
+    healthcheck:
+      disable: true
+
+  # The provided mock LLM server, unchanged. Its /control/* endpoints are published on
+  # localhost so failures and latency can be injected during a demo.
+  mock-llm:
+    image: python:3.13-alpine
+    init: true
+    restart: on-failure
+    command: ["python3", "-I", "/srv/mock-llm-server.py"]
+    environment:
+      PORT: "4001"
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - ./mock-llm/mock-llm-server.py:/srv/mock-llm-server.py:ro
+    ports:
+      - "127.0.0.1:${MOCK_LLM_PORT:-4001}:4001"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:4001/health')"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  # Stand-in for competitors' websites: serves the provided fixtures in sequence.
+  listing-stub:
+    build:
+      context: .
+      target: stub
+    image: competitor-pulse-stub:local
+    init: true
+    restart: on-failure
+    ports:
+      - "127.0.0.1:${STUB_PORT:-4002}:4002"
+
+  app:
+    <<: *app-image
+    init: true
+    restart: on-failure
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      listing-stub: { condition: service_healthy }
+      mock-llm: { condition: service_healthy }
+    environment:
+      DATABASE_URL: postgres://competitorpulse:competitorpulse@db:5432/competitorpulse
+      LISTING_SOURCE_URL: http://listing-stub:4002
+      LLM_BASE_URL: http://mock-llm:4001/v1
+      LLM_API_KEY: mock
+      LLM_MODEL: mock-llm
+      # Demo values; production would use 900 (15 min) and the default budget of 8 attempts.
+      # Own variable names: compose reads the project's .env, whose POLL_INTERVAL_SECONDS
+      # and LLM_MAX_ATTEMPTS are meant for running the server outside Docker.
+      POLL_INTERVAL_SECONDS: ${COMPOSE_POLL_INTERVAL_SECONDS:-15}
+      LLM_MAX_ATTEMPTS: ${COMPOSE_LLM_MAX_ATTEMPTS:-3}
+    ports:
+      - "127.0.0.1:${APP_PORT:-3000}:3000"
+    stop_grace_period: 30s
+
+volumes:
+  pgdata:

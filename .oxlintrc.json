@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import", "react"],
+  "categories": { "correctness": "error" },
+  "rules": {
+    "typescript/no-floating-promises": "error",
+    "typescript/no-misused-promises": "error",
+    "typescript/await-thenable": "error",
+    "typescript/no-explicit-any": "error",
+    "typescript/no-non-null-assertion": "error",
+    "typescript/switch-exhaustiveness-check": "error",
+    "react/rules-of-hooks": "error",
+    "no-console": "off"
+  },
+  "ignorePatterns": ["**/dist/**", "**/node_modules/**", "**/.vitest/**", "server/drizzle/**"]
+}

@@ -1,0 +1,1 @@
+CREATE INDEX "snapshots_failed_idx" ON "snapshots" USING btree ("id") WHERE "snapshots"."summary_status" = 'failed';

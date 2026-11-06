@@ -1,0 +1,80 @@
+{
+  "acme-crm": [
+    {
+      "title": "Acme CRM",
+      "tagline": "Simple CRM for small teams",
+      "price": "$29/mo",
+      "description": "Track leads and deals in one place."
+    },
+    {
+      "title": "Acme CRM",
+      "tagline": "Simple CRM for small teams",
+      "price": "$39/mo",
+      "description": "Track leads and deals in one place."
+    },
+    {
+      "title": "Acme CRM",
+      "tagline": "The CRM small teams love",
+      "price": "$39/mo",
+      "description": "Track leads and deals in one place. Now with AI follow-up reminders."
+    },
+    {
+      "title": "Acme CRM",
+      "tagline": "The CRM small teams love",
+      "price": "$39/mo",
+      "description": "Track leads and deals in one place. Now with AI follow-up reminders and a free-forever plan for solo founders."
+    }
+  ],
+  "north-analytics": [
+    {
+      "title": "North Analytics",
+      "tagline": "Product analytics without the setup tax",
+      "price": "$0 - $199/mo",
+      "description": "Event tracking, funnels, and retention cohorts. Self-serve, no sales calls."
+    },
+    {
+      "title": "North Analytics",
+      "tagline": "Product analytics without the setup tax",
+      "price": "$0 - $199/mo",
+      "description": "Event tracking, funnels, retention cohorts, and session replay. Self-serve, no sales calls."
+    },
+    {
+      "title": "North Analytics",
+      "tagline": "Product analytics, built for speed",
+      "price": "$0 - $249/mo",
+      "description": "Event tracking, funnels, retention cohorts, and session replay. Self-serve, no sales calls."
+    },
+    {
+      "title": "North Analytics",
+      "tagline": "Product analytics, built for speed",
+      "price": "$0 - $249/mo",
+      "description": "Event tracking, funnels, retention cohorts, session replay, and a SQL query builder. Self-serve, no sales calls."
+    }
+  ],
+  "ferry-pay": [
+    {
+      "title": "FerryPay",
+      "tagline": "Payments for marketplaces",
+      "price": "2.9% + $0.30 per transaction",
+      "description": "Split payments, hold funds in escrow, payout on your schedule."
+    },
+    {
+      "title": "FerryPay",
+      "tagline": "Payments for marketplaces",
+      "price": "2.5% + $0.30 per transaction",
+      "description": "Split payments, hold funds in escrow, payout on your schedule."
+    },
+    {
+      "title": "FerryPay",
+      "tagline": "Payments for marketplaces, without the wait",
+      "price": "2.5% + $0.30 per transaction",
+      "description": "Split payments, hold funds in escrow, instant payouts, built-in fraud screening."
+    },
+    {
+      "title": "FerryPay",
+      "tagline": "Payments for marketplaces, without the wait",
+      "price": "2.5% + $0.30 per transaction",
+      "description": "Split payments, hold funds in escrow, instant payouts, built-in fraud screening. Now available in the EU and UK."
+    }
+  ]
+}
